@@ -2,13 +2,14 @@
 
 **PyGol** is a novel Inductive Logic Programming (ILP) system based on **Meta Inverse Entailment (MIE)** using Python. In Meta Inverse Entailment (MIE), hypothesis clauses are formulated using a combination of a "bottom clause of relevant literals" and "meta theory." The bottom clause efficiently gathers related literals from background knowledge tied to a specific example, setting the boundaries for hypothesis search without the need for declarative biases like mode declarations. Simultaneously, the meta theory acts as an automatically induced language bias from the background knowledge.
 
-**PyGol** is a Python library that can be used in Python programs (e.g., Jupyter Notebooks). It can also connect with **SWI-Prolog** via **Pyswip**. 
+**PyGol** is presented here as a Python library that can be used in Python programs (e.g., Jupyter Notebooks). It can also connect with **SWI-Prolog** via **Pyswip**. 
 
 **PyGol** is free to use for non-commercial research and education. If you use PyGol for research, please cite the paper: 
+
 ```cmd
-Dany Varghese, Didac Barroso-Bergada, David A. Bohan  and  Alireza Tamaddoni-Nezhad, 
-Efficient Abductive Learning of Microbial Interactions using Meta Inverse Entailment,  
-In Proceedings of the 31st International Conference on ILP, Springer, 2022.
+Varghese D. Barroso-Bergadà D. Bohan D.A. Tamaddoni-Nezhad A. 2022Efficient abductive learning of microbial interactions using Meta Inverse EntailmentProceedings
+of the 31st International Conference on Inductive Logic Programming (ILP 2022),
+LNAI 13779,Springer .
 ```
 Anyone wishing to use PyGol for commercial purposes should contact either Dany Varghese(dany.varghese@surrey.ac.uk) or Alireza Tamaddoni-Nezhad(a.tamaddoni-nezhad@surrey.ac.uk).
 
