@@ -7,19 +7,19 @@
 **PyGol** is free to use for non-commercial research and education. If you use PyGol for research, please cite the paper: 
 
 ```cmd
-Varghese D. Barroso-Bergadà D. Bohan D.A. Tamaddoni-Nezhad A. 2022.
+Varghese D. Barroso-Bergadà D. Bohan D.A. Tamaddoni-Nezhad A. 2022, 
 Efficient abductive learning of microbial interactions usingMeta Inverse Entailment.
 In Proceedings of the 31st International Conference on Inductive Logic Programming (ILP 2022),
 LNAI 13779, Springer.
 ```
-Anyone wishing to use PyGol for commercial purposes should contact either Dany Varghese(dany.varghese@surrey.ac.uk) or Alireza Tamaddoni-Nezhad(a.tamaddoni-nezhad@surrey.ac.uk).
+Anyone wishing to use PyGol for commercial purposes should contact either Dany Varghese (dany.varghese@surrey.ac.uk) or Alireza Tamaddoni-Nezhad (a.tamaddoni-nezhad@surrey.ac.uk).
 
 ## Contributions
-* An ILP approach **Meta Inverse Entailment(MIE)**
+* An ILP approach **Meta Inverse Entailment (MIE)**
 * An algorithm to generate **Bottom Clause of Relevant Literals (BCRL)**
-* A new **higher-order** language bias **Meta Theory (MT)** - Automatically generating from BCRL
+* A new **higher-order** language bias **Meta Theory (MT)** that can automatically generate
 * **Abductive Learning** using MIE
-* Meta Inverse Entailment (MIE) for the purpose of **automated data science**
+
 
 ## Using PyGol
 **PyGol** package is provided as a **C** code. The shared-object file **pygol.so** runs in Python. The current shared-object file is compiled for **Linux x86_64** systems.
@@ -122,8 +122,7 @@ model= pygol_learn(Train_P, Train_N,  max_neg=0, max_literals=3, key_size=1,opti
 ## Learning Settings
 - ILP  Learning Approach :- **pygol_learn()**
 - ILP Cross-Validation Approach :- **pygol_cross_validation()**
-- Dealing with typical data science dataset :- **pygol_auto_learn()**
-- Dealing with typical data science dataset(CV) :- **pygol_auto_cross_validation()**
+- Abductive Learning :- **pygol_abduce()**
 
 For further information, please find the [manual](https://github.com/danyvarghese/PyGol/blob/debbe3024fda4cfaf33936e76dfd9455e455c39c/Manual_Pygol.pdf).
 
