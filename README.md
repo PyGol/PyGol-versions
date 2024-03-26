@@ -1,34 +1,35 @@
 # PyGol
+**PyGol** is a novel Inductive Logic Programming(ILP) system based on **Meta Inverse Entailment(MIE)** using Python. MIE is similar to Mode-Directed Inverse Entailment (MDIE) but does not require mode declarations. MIE can be applied to tabular and relational datasets with minimal user intervention or parameter settings. In MIE, each hypothesis clause is derived from a **meta theory** generated automatically from background knowledge. Meta theory can also be viewed as a higher-order language bias that defines the hypothesis space. 
 
-**PyGol** is a novel Inductive Logic Programming (ILP) system based on **Meta Inverse Entailment (MIE)** using Python. In Meta Inverse Entailment (MIE), hypothesis clauses are formulated using a combination of a "bottom clause of relevant literals" and "meta theory." The bottom clause efficiently gathers related literals from background knowledge tied to a specific example, setting the boundaries for hypothesis search without the need for declarative biases like mode declarations. Simultaneously, the meta theory acts as an automatically induced language bias from the background knowledge.
+**PyGol** is a Python library that can be used in Python programs (e.g., Jupyter Notebooks). It can also connect with **SWI-Prolog** via **Janus**. 
 
-**PyGol** is presented here as a Python library that can be used in Python programs (e.g., Jupyter Notebooks). It can also connect with **SWI-Prolog** via **Pyswip**. 
-
-**PyGol** is free to use for non-commercial research and education. If you use PyGol for research, please cite the paper: 
-
+**PyGol** is free to use for non-commercial research and education. If you use PyGol for research, please cite the paper: [Efficient Abductive Learning of Microbial Interactions using Meta Inverse Entailment](https://link.springer.com/chapter/10.1007/978-3-031-55630-2_10).
 ```cmd
-Varghese D. Barroso-Bergadà D. Bohan D.A. Tamaddoni-Nezhad A. 2022, 
-Efficient abductive learning of microbial interactions usingMeta Inverse Entailment.
-In Proceedings of the 31st International Conference on Inductive Logic Programming (ILP 2022),
-LNAI 13779, Springer.
+Dany Varghese, Didac Barroso-Bergada, David A. Bohan  and  Alireza Tamaddoni-Nezhad, 
+Efficient Abductive Learning of Microbial Interactions using Meta Inverse Entailment,  
+In Proceedings of the 31st International Conference on ILP, Springer, 2022.
 ```
-Anyone wishing to use PyGol for commercial purposes should contact either Dany Varghese (dany.varghese@surrey.ac.uk) or Alireza Tamaddoni-Nezhad (a.tamaddoni-nezhad@surrey.ac.uk).
+Anyone wishing to use PyGol for commercial purposes should contact either Dany Varghese(dany.varghese@surrey.ac.uk) or Alireza Tamaddoni-Nezhad(a.tamaddoni-nezhad@surrey.ac.uk).
 
 ## Contributions
-* An ILP approach **Meta Inverse Entailment (MIE)**
+* An ILP approach **Meta Inverse Entailment(MIE)**
 * An algorithm to generate **Bottom Clause of Relevant Literals (BCRL)**
-* A new **higher-order** language bias **Meta Theory (MT)** that can automatically generate
+* A new **higher-order** language bias **Meta Theory (MT)** - Automatically generating from BCRL
 * **Abductive Learning** using MIE
+* Meta Inverse Entailment (MIE) for the purpose of **automated data science**
 
+#### Requirements
+* [SWI-Prolog](https://www.swi-prolog.org) (9.2.0 or above)
+* [Janus-swi](https://github.com/SWI-Prolog/packages-swipy)
+* [Cython](https://cython.org/)
 
 ## Using PyGol
-**PyGol** package is provided as a **C** code. The shared-object file **pygol.so** runs in Python. The current shared-object file is compiled for **Linux x86_64** systems.
+**PyGol** package is provided as a **C** code. The shared-object file **pygol.so** runs in Python. The current shared-object file is compiled for **Mac M1** systems.
 
-For all other systems, you can find the **C** code in the folder **"Code"** and convert it to shared-object by executing the following commands;
+For all other systems, you can find the **C** code  and convert it to shared-object by executing the **generate_so.py** by following commands;
 
 ```cmd
-gcc <Python_Environment_Variable> -c -fPIC pygol.c -o pygol.o
-gcc pygol.o -shared -o pygol.so
+python3 generate_so.py build_ext --inplace
 ```
 ## Example Problem
 PyGol requires four inputs, either in the form of files or a list
@@ -91,10 +92,10 @@ Train_P, Test_P, Train_N, Test_N=pygol_train_test_split(test_size=0, positive_fi
                                                                  negative_file_dictionary=N)
 
 #Learning Phase/Training Phase using Python
-model= pygol_learn(Train_P, Train_N,  max_neg=0, max_literals=3, key_size=1,optimize=False)
+model= pygol_learn(Train_P, Train_N,  max_neg=0, max_literals=3, key_size=1)
 ```
 
-### Output from Learning Phase
+### Output from learning phase
 ```
 +----------+ Training +----------+
 ['eastbound(A):-has_car(A,B),closed(B),short(B)']
@@ -119,12 +120,41 @@ model= pygol_learn(Train_P, Train_N,  max_neg=0, max_literals=3, key_size=1,opti
 | F1 Score    | 1 |
 +-------------+---+
 ```
-## Learning Settings
+
+## Recursion
+
+PyGol is capable of learning recursive programs where a predicate symbol is present in both the rule's head and its body. 
+
+To lean recursive rule, **recursive** and **rule_noise_check** variable should be set as True inside **pygol_learn()**. 
+
+```Python
+model= pygol_learn(_ ,_ , ... , rule_noise_check = True, recursive = True)
+```
+
+_Please refer to [ancestor relation learning problem](https://github.com/danyvarghese/PyGol/tree/main/examples/ancestor)._
+
+
+## Predicate invention
+
+PyGol can also perform automatic predicate invention and for that **pi** varibale should set as True. 
+
+```Python
+model= pygol_learn(_ ,_ , ... ,  pi = True)
+```
+
+_Please refer to [grandparent relation learning problem](https://github.com/danyvarghese/PyGol/tree/main/examples/grand_parent)._
+
+## Learning settings
 - ILP  Learning Approach :- **pygol_learn()**
 - ILP Cross-Validation Approach :- **pygol_cross_validation()**
-- Abductive Learning :- **pygol_abduce()**
+- ILP abduction (Reasoning) :- **pygol_abduction()**
 
 For further information, please find the [manual](https://github.com/danyvarghese/PyGol/blob/debbe3024fda4cfaf33936e76dfd9455e455c39c/Manual_Pygol.pdf).
 
-## Bug Reports and Feature Requests
+## Publications
+* Didac Barroso-Bergada, Alireza Tamaddoni-Nezhad, Dany Varghese, Corinne Vacher, Nika Galic, Valérie Laval, Frédéric Suffert, David A Bohan. [Unravelling the web of dark interactions: Explainable inference of the diversity of microbial interactions](https://www.sciencedirect.com/science/article/abs/pii/S0065250423000053?via%3Dihub).  Advances in Ecological Research, 2023.
+* Dany Varghese, Roman Bauer, Alireza Tamaddoni-Nezhad. [Few-Shot Learning of Diagnostic Rules for Neurodegenerative Diseases Using Inductive Logic Programming](https://link.springer.com/chapter/10.1007/978-3-031-49299-0_8). Lecture Notes in Computer Science, Springer, 2023.
+*  Dany Varghese, Uzma Patel, Paul Krause & Alireza Tamaddoni-Nezhad. [Few-Shot Learning for Plant Disease Classification Using ILP](https://link.springer.com/chapter/10.1007/978-3-031-35641-4_26). Communications in Computer and Information Science, Springer, 2022.
+
+## Bug reports and feature requests
 Please submit all bug reports and feature requests as issues on this GitHub repository.
